@@ -1,0 +1,13 @@
+{
+  "name": "player/run",
+  "loop": true,
+  "pong": false,
+  "flip_x": false,
+  "flip_y": false,
+  "generate_flipped": true,
+  "frame_durations": [
+    0.4,
+    0.2,
+    0.6
+  ]
+}

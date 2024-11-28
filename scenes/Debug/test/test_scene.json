@@ -1,0 +1,12 @@
+{
+  "name": "test scene",
+  "active": false,
+  "order": 1,
+  "active scripts": [
+    "test0.py",
+    "test1.py"
+  ],
+  "execution order": {
+    "test2.py": -2
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "ui editor",
+  "active": false,
+  "order": 1,
+  "active scripts": [
+    "ui_editor.py"
+  ]
+}

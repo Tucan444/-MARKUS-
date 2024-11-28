@@ -1,0 +1,53 @@
+all scenes are in their respective directories
+there is no scene in this directory
+
+in each scene there are scripts and subfolders with more scripts
+if a .json file is found in a directory, that directory is considered to
+be a scene
+
+a .json of a scene contains its |name|, |order| and |names of scripts that should be set as active|
+along with information if the |scene should be started|
+after that it has list of scripts and their |order|, if missing order is 0
+
+all scripts in a scene take 3 arguments (must inherit SceneBehaviour)
+1. game: 'Game'
+2. scene: 'Scene' -> will be given the scene it corresponds to
+3. active: bool -> information if script should get .update called
+4. order: int -> default is 0, but can be specified, works as execution order
+
+Lastly init() will act as a reset button being called when script is started
+after being inactive.
+end() will also be called on deactivation.
+
+OLNY CLASSES WILL BE IMPORTED FROM SCRIPTS!
+
+Json example:
+{
+  "name": "test scene",
+  "active": false,
+  "order": 1, (int)
+  "active scripts": [
+    "test0.py",
+    "test1.py"
+  ],
+  "execution order": {
+    "test2.py": -2
+  }
+}
+
+Script example:
+
+from scenes.scene_behaviour import SceneBehaviour
+
+class TilemapEditor(SceneBehaviour):
+    def __init__(self, game, scene, active, order):
+        super().__init__(game, scene, active, order)
+
+    def init(self):
+        pass
+
+    def update(self):
+        pass
+
+    def end(self):
+        pass

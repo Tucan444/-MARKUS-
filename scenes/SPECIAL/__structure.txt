@@ -1,0 +1,4 @@
+Special scenes exist to prevent over-cluttering from having folders for different types of scripts.
+
+Each special scene is used as autoloading of different classes that are later used.
+For example Effects contains classes that represent ImageEffects

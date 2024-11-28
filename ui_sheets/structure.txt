@@ -1,0 +1,373 @@
+each something has a lot of something and that has a lot of something else
+I hate UI how did you know?
+
+omg example json I guess:
+{
+    "type": "ui sheet",
+    "name": "test",
+    "position": [
+        100.0,
+        100.0
+    ],
+    "elements": [
+        {
+            "type": "button",
+            "size": [
+                1253,
+                703
+            ],
+            "name": "guha",
+            "position": [
+                -100.0,
+                -100.0
+            ],
+            "layer": -5,
+            "input wait": -40,
+            "active": true,
+            "hitbox type": 1,
+            "enabled": true,
+            "idle image": "cell2",
+            "hover image": "cell2Hover",
+            "pressed image": "cell2",
+            "disabled image": "cell2Hover"
+        },
+        {
+            "type": "image",
+            "size": [
+                1024,
+                1024
+            ],
+            "name": "FUKA",
+            "position": [
+                100.0,
+                0.0
+            ],
+            "layer": -4,
+            "input wait": 0,
+            "active": true,
+            "hitbox type": 0,
+            "image": "0",
+            "image hover": "0"
+        },
+        {
+            "type": "button",
+            "size": [
+                32,
+                32
+            ],
+            "name": "guh",
+            "position": [
+                600.0,
+                0.0
+            ],
+            "layer": 2,
+            "input wait": -45,
+            "active": true,
+            "hitbox type": 0,
+            "enabled": true,
+            "idle image": "tile",
+            "hover image": "tileHovered",
+            "pressed image": "tilePressed",
+            "disabled image": "tileDisabled"
+        },
+        {
+            "type": "scroll zone",
+            "size": [
+                150,
+                20
+            ],
+            "name": "Theresa",
+            "position": [
+                700.0,
+                0.0
+            ],
+            "layer": 3,
+            "input wait": -4,
+            "active": true,
+            "hitbox type": 0,
+            "enabled": true,
+            "image": "slider",
+            "image hover": "sliderFilled",
+            "image disabled": "sliderDisabled",
+            "scroll speed": 2,
+            "scroll bounds": [
+                [
+                    0.0,
+                    100.0
+                ],
+                [
+                    -10.0,
+                    50.0
+                ]
+            ],
+            "vertical": true,
+            "flip direction": false,
+            "zone elements": [
+                "Kiana",
+                "guh",
+                "uga buga"
+            ]
+        },
+        {
+            "type": "text",
+            "size": [
+                500,
+                100
+            ],
+            "name": "bla",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "layer": 5,
+            "input wait": 0,
+            "active": true,
+            "hitbox type": 0,
+            "text": "KILL YOURSELF",
+            "color idle": [
+                255,
+                0,
+                0
+            ],
+            "color hover": [
+                0,
+                255,
+                0
+            ],
+            "color pressed": [
+                0,
+                0,
+                255
+            ],
+            "is interactive": true,
+            "font": "Helvetica-Bold",
+            "font size": 20,
+            "bold": true,
+            "centered": true,
+            "visualize boundary": true
+        },
+        {
+            "type": "toggle",
+            "size": [
+                32,
+                32
+            ],
+            "name": "Himeko Vermilion Knight",
+            "position": [
+                165.0,
+                210.0
+            ],
+            "layer": 5,
+            "input wait": -50,
+            "active": true,
+            "hitbox type": 2,
+            "is_on": true,
+            "enabled": true,
+            "on image": "tile",
+            "on image disabled": "tileHovered",
+            "on image hover": "tilePressed",
+            "off image": "tileDisabled",
+            "off image disabled": "tilePressed",
+            "off image hover": "tileHovered"
+        },
+        {
+            "type": "toggle",
+            "size": [
+                32,
+                32
+            ],
+            "name": "Himeko x Kiana",
+            "position": [
+                185.0,
+                210.0
+            ],
+            "layer": 5,
+            "input wait": -50,
+            "active": true,
+            "hitbox type": 2,
+            "is_on": false,
+            "enabled": true,
+            "on image": "tile",
+            "on image disabled": "tileHovered",
+            "on image hover": "tilePressed",
+            "off image": "tileDisabled",
+            "off image disabled": "tilePressed",
+            "off image hover": "tileHovered"
+        },
+        {
+            "type": "toggle",
+            "size": [
+                32,
+                32
+            ],
+            "name": "Himeko",
+            "position": [
+                150.0,
+                200.0
+            ],
+            "layer": 6,
+            "input wait": -50,
+            "active": true,
+            "hitbox type": 2,
+            "is_on": true,
+            "enabled": true,
+            "on image": "tile",
+            "on image disabled": "tileHovered",
+            "on image hover": "tilePressed",
+            "off image": "tileDisabled",
+            "off image disabled": "tilePressed",
+            "off image hover": "tileHovered"
+        },
+        {
+            "type": "progress bar",
+            "size": [
+                150,
+                20
+            ],
+            "name": "uga buga",
+            "position": [
+                -50.0,
+                150.0
+            ],
+            "layer": 6,
+            "input wait": 0,
+            "active": true,
+            "hitbox type": 0,
+            "empty": "slider",
+            "full": "sliderFilled",
+            "horizontal": true,
+            "flip direction": false,
+            "progress": 0,
+            "progress range": 80
+        },
+        {
+            "type": "slider",
+            "size": [
+                146,
+                32
+            ],
+            "name": "Kiana",
+            "position": [
+                200.0,
+                -50.0
+            ],
+            "layer": 7,
+            "input wait": -50,
+            "active": true,
+            "hitbox type": 0,
+            "enabled": true,
+            "min value": 2.2,
+            "max value": 3.6,
+            "initial value": 2.8,
+            "whole numbers": false,
+            "knob hitbox type": 0,
+            "slider hitbox type": 1,
+            "slider": "slider",
+            "slider filled": "sliderFilled",
+            "knob": "tile",
+            "knob hover": "tileHovered",
+            "knob pressed": "tilePressed",
+            "knob disabled": "tileDisabled"
+        },
+        {
+            "type": "dropdown",
+            "size": [
+                150,
+                20
+            ],
+            "name": "FU HUA",
+            "position": [
+                200.0,
+                150.0
+            ],
+            "layer": 9,
+            "input wait": -500,
+            "active": true,
+            "hitbox type": 0,
+            "selection hitbox type": 0,
+            "option hitbox type": 1,
+            "selection text": "suits",
+            "use option as text": true,
+            "text padding": 0.09999999999999998,
+            "options": [
+                "casual",
+                "shadow knight",
+                "phoenix",
+                "emperor",
+                "herreser of vermilion",
+                "bed",
+                "sexy"
+            ],
+            "initial option": 1,
+            "enabled": true,
+            "selection": "sliderFilled",
+            "selection hover": "sliderHover",
+            "selection selected": "slider",
+            "selection disabled": "sliderDisabled",
+            "option": "option",
+            "option hover": "option_hover",
+            "selection font": "Helvetica-Bold",
+            "selection font size": 20,
+            "selection bold": true,
+            "option font": "Helvetica-Bold",
+            "option font size": 10,
+            "option bold": false,
+            "color selection": [
+                250,
+                250,
+                250
+            ],
+            "color selection hover": [
+                150,
+                150,
+                150
+            ],
+            "color selection pressed": [
+                50,
+                50,
+                50
+            ],
+            "color option": [
+                255,
+                150,
+                150
+            ],
+            "color option hover": [
+                255,
+                200,
+                200
+            ],
+            "options background": "bg",
+            "options foreground": "fg",
+            "scroll speed": 0.2
+        }
+    ],
+    "groups": [
+        {
+            "type": "ui group",
+            "name": "toggles movers",
+            "elements": [
+                "Himeko x Kiana",
+                "bla",
+                "Kiana",
+                "Himeko",
+                "guh",
+                "Himeko Vermilion Knight",
+                "FU HUA",
+                "uga buga",
+                "guha"
+            ]
+        },
+        {
+            "type": "select group",
+            "name": "oh god work",
+            "elements": [
+                "Himeko x Kiana",
+                "Himeko",
+                "Himeko Vermilion Knight"
+            ],
+            "max count": 2,
+            "limit_off_toggles": false
+        }
+    ]
+}

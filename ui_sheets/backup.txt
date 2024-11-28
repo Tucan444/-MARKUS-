@@ -1,0 +1,477 @@
+{
+  "type": "ui sheet",
+  "name": "tilemap editor main",
+  "position": [
+    0, 0
+  ],
+  "elements": [
+    {
+        "type": "scroll zone",
+        "size": [
+            200,
+            710
+        ],
+        "name": "DEEP",
+        "position": [
+            0.0,
+            100.0
+        ],
+        "layer": -6,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "image": "tilemap_editor/scroll_zone",
+        "image hover": "tilemap_editor/scroll_zone_hover",
+        "image disabled": "tilemap_editor/scroll_zone",
+        "scroll speed": 2,
+        "scroll bounds": [
+            [
+                0.0,
+                100.0
+            ],
+            [
+                0, 0
+            ]
+        ],
+        "vertical": true,
+        "flip direction": false,
+        "zone elements": [
+        ]
+    },
+    {
+        "type": "image",
+        "size": [
+            200,
+            100
+        ],
+        "name": "TILEMAP TITLE BG",
+        "position": [
+            0.0,
+            0.0
+        ],
+        "layer": 0,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "image": "tilemap_editor/title bg",
+        "image hover": "tilemap_editor/title bg"
+    },
+    {
+        "type": "text",
+        "size": [
+            180,
+            80
+        ],
+        "name": "TILEMAP TITLE",
+        "position": [
+            10.0,
+            10.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "TITLE",
+        "color idle": [
+            255,
+            200,
+            200
+        ],
+        "color hover": [
+            255,
+            200,
+            200
+        ],
+        "color pressed": [
+            255,
+            200,
+            200
+        ],
+        "is interactive": false,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+      {
+        "type": "button",
+        "size": [
+            50,
+            50
+        ],
+        "name": "ADD GRID",
+        "position": [
+            200.0,
+            0.0
+        ],
+        "layer": 0,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "idle image": "tilemap_editor/add_grid",
+        "hover image": "tilemap_editor/add_grid_hover",
+        "pressed image": "tilemap_editor/add_grid_pressed",
+        "disabled image": "tilemap_editor/add_grid"
+     },
+    {
+        "type": "button",
+        "size": [
+            50,
+            50
+        ],
+        "name": "REMOVE GRID",
+        "position": [
+            200.0,
+            50.0
+        ],
+        "layer": 0,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "idle image": "tilemap_editor/remove_grid",
+        "hover image": "tilemap_editor/remove_grid_hover",
+        "pressed image": "tilemap_editor/remove_grid_pressed",
+        "disabled image": "tilemap_editor/remove_grid"
+     },
+
+    {
+        "type": "image",
+        "size": [
+            200,
+            100
+        ],
+        "name": "GridBg",
+        "position": [
+            250.0,
+            0.0
+        ],
+        "layer": -3,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "image": "tilemap_editor/grid/bg",
+        "image hover": "tilemap_editor/grid/bg"
+    },
+    {
+        "type": "text",
+        "size": [
+            50,
+            40
+        ],
+        "name": "GridTitle",
+        "position": [
+            250.0,
+            0.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "grid name",
+        "color idle": [
+            200,
+            200,
+            200
+        ],
+        "color hover": [
+            200,
+            200,
+            200
+        ],
+        "color pressed": [
+            200,
+            200,
+            200
+        ],
+        "is interactive": false,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+    {
+        "type": "toggle",
+        "size": [
+            50,
+            60
+        ],
+        "name": "GridSelect",
+        "position": [
+            250.0,
+            50.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "is_on": false,
+        "enabled": true,
+        "on image": "tilemap_editor/grid/select_on",
+        "on image disabled": "tilemap_editor/grid/select_on",
+        "on image hover": "tilemap_editor/grid/select_on_hover",
+        "off image": "tilemap_editor/grid/select_off",
+        "off image disabled": "tilemap_editor/grid/select_off",
+        "off image hover": "tilemap_editor/grid/select_off_hover"
+    },
+    {
+        "type": "slider",
+        "size": [
+            84,
+            33
+        ],
+        "name": "GridSliderTileSize",
+        "position": [
+            300.0,
+            0.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "min value": 2,
+        "max value": 7,
+        "initial value": 5,
+        "whole numbers": true,
+        "knob hitbox type": 0,
+        "slider hitbox type": 0,
+        "slider": "tilemap_editor/grid/slider",
+        "slider filled": "tilemap_editor/grid/slider_filled",
+        "knob": "tilemap_editor/grid/knob",
+        "knob hover": "tilemap_editor/grid/knob_hover",
+        "knob pressed": "tilemap_editor/grid/knob_pressed",
+        "knob disabled": "tilemap_editor/grid/knob_disabled"
+    },
+    {
+        "type": "slider",
+        "size": [
+            84,
+            33
+        ],
+        "name": "GridSliderDepth",
+        "position": [
+            300.0,
+            33.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "min value": -5,
+        "max value": 5,
+        "initial value": 0,
+        "whole numbers": false,
+        "knob hitbox type": 0,
+        "slider hitbox type": 0,
+        "slider": "tilemap_editor/grid/slider",
+        "slider filled": "tilemap_editor/grid/slider_filled",
+        "knob": "tilemap_editor/grid/knob",
+        "knob hover": "tilemap_editor/grid/knob_hover",
+        "knob pressed": "tilemap_editor/grid/knob_pressed",
+        "knob disabled": "tilemap_editor/grid/knob_disabled"
+    },
+    {
+        "type": "slider",
+        "size": [
+            84,
+            33
+        ],
+        "name": "GridSliderAlpha",
+        "position": [
+            300.0,
+            66.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "min value": 0,
+        "max value": 1,
+        "initial value": 1,
+        "whole numbers": false,
+        "knob hitbox type": 0,
+        "slider hitbox type": 0,
+        "slider": "tilemap_editor/grid/slider",
+        "slider filled": "tilemap_editor/grid/slider_filled",
+        "knob": "tilemap_editor/grid/knob",
+        "knob hover": "tilemap_editor/grid/knob_hover",
+        "knob pressed": "tilemap_editor/grid/knob_pressed",
+        "knob disabled": "tilemap_editor/grid/knob_disabled"
+    },
+      {
+        "type": "toggle",
+        "size": [
+            50,
+            60
+        ],
+        "name": "GridActive",
+        "position": [
+            384.0,
+            0.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "is_on": true,
+        "enabled": true,
+        "on image": "tilemap_editor/grid/active_on",
+        "on image disabled": "tilemap_editor/grid/active_on",
+        "on image hover": "tilemap_editor/grid/active_on_hover",
+        "off image": "tilemap_editor/grid/active_off",
+        "off image disabled": "tilemap_editor/grid/active_off",
+        "off image hover": "tilemap_editor/grid/active_off_hover"
+    },
+      {
+        "type": "toggle",
+        "size": [
+            50,
+            60
+        ],
+        "name": "GridUseDepth",
+        "position": [
+            384.0,
+            33.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "is_on": false,
+        "enabled": true,
+        "on image": "tilemap_editor/grid/depth_on",
+        "on image disabled": "tilemap_editor/grid/depth_on",
+        "on image hover": "tilemap_editor/grid/depth_on_hover",
+        "off image": "tilemap_editor/grid/depth_off",
+        "off image disabled": "tilemap_editor/grid/depth_off",
+        "off image hover": "tilemap_editor/grid/depth_off_hover"
+    },
+      {
+        "type": "toggle",
+        "size": [
+            50,
+            60
+        ],
+        "name": "GridPhysical",
+        "position": [
+            384.0,
+            66.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "is_on": false,
+        "enabled": true,
+        "on image": "tilemap_editor/grid/physical_on",
+        "on image disabled": "tilemap_editor/grid/physical_on",
+        "on image hover": "tilemap_editor/grid/physical_on_hover",
+        "off image": "tilemap_editor/grid/physical_off",
+        "off image disabled": "tilemap_editor/grid/physical_off",
+        "off image hover": "tilemap_editor/grid/physical_off_hover"
+    },
+      {
+        "type": "toggle",
+        "size": [
+            50,
+            60
+        ],
+        "name": "GridInvisible",
+        "position": [
+            417.0,
+            33.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "is_on": false,
+        "enabled": true,
+        "on image": "tilemap_editor/grid/invisible_on",
+        "on image disabled": "tilemap_editor/grid/invisible_on",
+        "on image hover": "tilemap_editor/grid/invisible_on_hover",
+        "off image": "tilemap_editor/grid/invisible_off",
+        "off image disabled": "tilemap_editor/grid/invisible_off",
+        "off image hover": "tilemap_editor/grid/invisible_off_hover"
+    },
+      {
+        "type": "button",
+        "size": [
+            50,
+            50
+        ],
+        "name": "GridLayerUp",
+        "position": [
+            417.0,
+            0.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "idle image": "tilemap_editor/grid/layer_up",
+        "hover image": "tilemap_editor/grid/layer_up_hover",
+        "pressed image": "tilemap_editor/grid/layer_up_pressed",
+        "disabled image": "tilemap_editor/grid/layer_up_disabled"
+     },
+      {
+        "type": "button",
+        "size": [
+            33,
+            33
+        ],
+        "name": "GridLayerDown",
+        "position": [
+            417.0,
+            66.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "idle image": "tilemap_editor/grid/layer_down",
+        "hover image": "tilemap_editor/grid/layer_down_hover",
+        "pressed image": "tilemap_editor/grid/layer_down_pressed",
+        "disabled image": "tilemap_editor/grid/layer_down_disabled"
+     }
+  ],
+  "groups": [
+      {
+          "type": "ui group",
+          "name": "GridGroup",
+          "elements": [
+              "GridBg",
+              "GridTitle",
+              "GridSelect",
+              "GridSliderTileSize",
+              "GridSliderDepth",
+              "GridSliderAlpha",
+              "GridActive",
+              "GridUseDepth",
+              "GridPhysical",
+              "GridInvisible",
+              "GridLayerUp",
+              "GridLayerDown"
+          ]
+      },
+      {
+          "type": "select group",
+          "name": "GridSelect",
+          "elements": [
+
+          ],
+          "max count": 1,
+          "limit off toggles": true,
+          "always selectable": true
+      }
+  ]
+}

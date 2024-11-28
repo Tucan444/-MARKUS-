@@ -1,0 +1,26 @@
+each animation is in a separate folder
+with .json containing |name| of the animation and
+|durations for separate frames in seconds|
+along with information if animation should |loop|
+
+|frames| are .png's sorted like
+0.png, 1.png, 2.png
+or
+idle_0.png, idle_1.png, idle_2.png
+
+there must be no animation in this folder
+(as in .json with png's)
+
+Json example:
+{
+  "name": "player/idle",
+  "loop": true,
+  "pong": true,
+  "flip_x": false,
+  "flip_y": false,
+  "generate_flipped": false
+  "frame_durations": [
+    0.8,
+    1
+  ]
+}

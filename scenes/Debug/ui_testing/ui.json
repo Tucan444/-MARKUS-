@@ -1,0 +1,8 @@
+{
+  "name": "ui testing",
+  "active": false,
+  "order": 0,
+  "active scripts": [
+    "ui_test.py"
+  ]
+}

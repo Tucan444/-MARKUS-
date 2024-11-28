@@ -1,0 +1,26 @@
+{
+    "name": "TEST TILEMAP",
+    "standard tile size": 32,
+    "alpha": 1,
+    "position": [
+        39.124450000000024,
+        121.12009999999998
+    ],
+    "grids": [
+        {
+            "name": "main",
+            "tile size": 64,
+            "alpha": 1,
+            "layer": 113,
+            "active": true,
+            "depth": 1.0909090909090917,
+            "use depth": false,
+            "invisible": false,
+            "physical": false,
+            "ongrid padding": 0,
+            "tiles": [],
+            "offgrid background": [],
+            "offgrid foreground": []
+        }
+    ]
+}

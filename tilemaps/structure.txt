@@ -1,0 +1,40 @@
+This folder represents all .json files as tilemaps.
+
+Tilemap has name, WorldPosition, associated_scene and list of grids.
+Each grid has name, tile_size, layer, depth and if depth is to be used.
+It also has list of tiles in the grid.
+
+All tiles have position, image and grid they belong to.
+
+Example:
+{
+    "name": "TEST TILEMAP",
+    "standard tile size": 32,
+    "alpha": 1,
+    "position": [
+        5.12445,
+        32.1201
+    ],
+    "grids": [
+        {
+            "name": "main",
+            "tile size": 64,
+            "alpha": 1,
+            "layer": 113,
+            "active": true,
+            "depth": 2.545454545454545,
+            "use depth": true,
+            "invisible": false,
+            "physical": false,
+            "tiles": [
+                {
+                    "image": "random/tile",
+                    "position": "10;0",
+                    "alpha": 1
+                }
+            ],
+            "offgrid background": [],
+            "offgrid foreground": []
+        }
+    ]
+}

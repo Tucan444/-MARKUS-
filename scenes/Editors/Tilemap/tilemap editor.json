@@ -1,0 +1,11 @@
+{
+  "name": "tilemap editor",
+  "active": true,
+  "order": 0,
+  "active scripts": [
+    "editor.py"
+  ],
+  "execution order": {
+    "editor.py": -5
+  }
+}
