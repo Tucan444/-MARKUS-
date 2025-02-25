@@ -1,3 +1,5 @@
+from moderngl import Framebuffer
+
 from scenes.SPECIAL.Effects.Effect import Effect
 from scripts.GameTypes import Percentage, OperationType
 from scripts.Utilities.Graphics.double_framebuffer import DoubleFramebuffer
@@ -10,8 +12,8 @@ class TextureCalculator(Effect):
                  operation: OperationType=OperationType.ADD):
         super().__init__(frag)
 
-        self.tex_a: DoubleFramebuffer = self.graphics.double_fbo
-        self.tex_b: DoubleFramebuffer = self.graphics.double_fbo
+        self.tex_a: DoubleFramebuffer|Framebuffer = self.graphics.double_fbo
+        self.tex_b: DoubleFramebuffer|Framebuffer = self.graphics.double_fbo
         self.target: DoubleFramebuffer = self.graphics.double_fbo
 
         self.a_amount: float = a_amount
@@ -24,7 +26,7 @@ class TextureCalculator(Effect):
         self.tex_a, self.tex_b = self.tex_b, self.tex_a
 
     @property
-    def clone(self) -> 'HazeBloom':
+    def clone(self) -> 'TextureCalculator':
         calculator = TextureCalculator(self.frag, self.a_amount, self.b_amount, self.interpolation, self.operation)
         calculator.tex_a = self.tex_a
         calculator.tex_b = self.tex_b

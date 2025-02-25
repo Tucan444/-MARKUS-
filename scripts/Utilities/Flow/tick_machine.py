@@ -1,16 +1,17 @@
 from scripts.DataStructures.sorted_array import SortedArray
 from scripts.GameTypes import SF_key, SortableFunction
+from scripts.Utilities.Flow.timeline import Timeline
 
 
 class TickMachine:
-    def __init__(self, game: 'Game', name: str, tps: float, time_speed: float=1):
+    def __init__(self, game: 'Game', name: str, tps: float, timeline: Timeline=None):
         self._tps: float = 1
         self._tick_time: float = 1
 
         self.game: 'Game' = game
         self.name: str = name
         self.tps: float = tps
-        self.time_speed: float = time_speed
+        self.timeline = timeline if timeline is not None else Timeline.blank(game)
 
         self.time_accumulator: float = 0
         self.ticks_ticked: int = 0
@@ -55,7 +56,7 @@ class TickMachine:
         self.ticks_ticked = 0
 
     def update(self) -> None:
-        self.time_accumulator += self.game.flow.dt * self.time_speed
+        self.time_accumulator += self.timeline.dt
 
         while self.time_accumulator > self.tick_time:
             self.time_accumulator -= self.tick_time

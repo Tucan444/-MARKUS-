@@ -18,7 +18,36 @@
             "invisible": false,
             "physical": false,
             "ongrid padding": 0,
-            "tiles": [],
+            "tiles": [
+                {
+                    "image": "random/tile",
+                    "position": "10;0",
+                    "alpha": 1
+                },
+                {
+                    "position":"11;17",
+                    "animation":"tiles/color/rainbow",
+                    "clone_animation": false,
+                    "groups": [
+                        "yellow",
+                        "colorful"
+                    ]
+                },
+                {
+                    "position": "50;20",
+                    "image": "random/tile",
+                    "components": [
+                        {
+                            "class_name": "ColorTileComponent",
+                            "color": [
+                                250,
+                                100,
+                                100
+                            ]
+                        }
+                    ]
+                }
+            ],
             "offgrid background": [],
             "offgrid foreground": []
         }

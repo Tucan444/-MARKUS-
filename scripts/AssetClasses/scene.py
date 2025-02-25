@@ -1,12 +1,13 @@
 from scenes.scene_behaviour import SceneBehaviour
 
 class Scene:
-    def __init__(self, game: 'Game', name: str, active: bool, order: int):
+    def __init__(self, game: 'Game', name: str, active: bool, order: int, path: str):
         self.game: 'Game' = game
         self.name: str = name
         self._active: bool = active
         self.order: int = order
 
+        self.path: str = path
         self.objects: dict[str, SceneBehaviour] = {}
         self.objects_ordered: list[SceneBehaviour] = []
         self.classes: dict[str, type(object)] = {}

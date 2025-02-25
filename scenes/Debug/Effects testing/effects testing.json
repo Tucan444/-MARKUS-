@@ -1,6 +1,6 @@
 {
   "name": "effects testing",
-  "active": false,
+  "active": true,
   "order": 0,
   "active scripts": [
     "effectorander.py"

@@ -121,6 +121,11 @@ class ScrollZone(UI_Element):
         self.position += vector
         self.group.move_elements(vector)
 
+    def detach(self) -> None:
+        self.ui_sheet.remove_element(self)
+        self.game.inputs.on_mouse_scroll_up.remove(self.scroll_up_funka)
+        self.game.inputs.on_mouse_scroll_down.remove(self.scroll_down_funka)
+
     def blit(self):
         blit_image: Surface = self.image
 

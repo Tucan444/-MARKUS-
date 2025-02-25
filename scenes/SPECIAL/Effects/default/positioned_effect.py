@@ -6,7 +6,6 @@ from scripts.Utilities.Graphics.effect_area import EffectArea
 from scripts.Utilities.Graphics.frag import Frag
 
 
-# CODE YELLOW, expects input to be from its target and output of effect to be on the other side of its target
 class PositionedEffect(Effect):
     def __init__(self, frag: Frag, effect: Effect=None, effect_areas: set[EffectArea]=None,
                  calculation_target: DoubleFramebuffer=None):
@@ -20,7 +19,9 @@ class PositionedEffect(Effect):
 
     @property
     def clone(self) -> 'PositionedEffect':
-        return PositionedEffect(self.frag, self.effect, self.effect_areas, self.calculation_target)
+        return PositionedEffect(self.frag, self.effect, {
+            effect_area.clone for effect_area in self.effect_areas
+        }, self.calculation_target)
 
     def get_area_presences(self) -> tuple[bool, list[tuple[EffectArea, bool]]]:
         area_is_present: bool = False

@@ -2,7 +2,7 @@ from scripts.AssetClasses.Tilemap.grid import Grid
 from scripts.AssetClasses.Tilemap.Tiles.tile import Tile
 import pygame
 
-from scripts.AssetClasses.animation import Animation
+from scripts.AssetClasses.Animation.animation import Animation
 from scripts.GameTypes import Percentage, TilePosition
 
 
@@ -41,7 +41,7 @@ class AnimatedTile(Tile):
         return self._alpha_image
 
     @property
-    def blit_image(self) -> pygame.Surface:
+    def image(self) -> pygame.Surface:
         return self.animation.image
 
     @property

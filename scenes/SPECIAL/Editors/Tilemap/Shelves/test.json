@@ -1,0 +1,30 @@
+{
+  "id": 0,
+  "editor_tiles": [
+    {
+      "preview": {
+        "image": "tiles/color/green"
+      },
+      "tile": {
+        "image": "tiles/color/green"
+      }
+    },
+    {
+      "preview": {},
+      "tile": {
+        "animation": "tiles/color/rainbow"
+      }
+    },
+    {
+      "preview": {
+        "color": [250, 100, 100]
+      },
+      "tile": {
+        "image": "tiles/color/yellow",
+        "components": [
+          {"class_name":"ColorTileComponent","color":[250,50,250]}
+        ]
+      }
+    }
+  ]
+}

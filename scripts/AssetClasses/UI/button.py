@@ -2,7 +2,7 @@ from pygame import Surface
 
 from scripts.AssetClasses.UI.ui_element import UI_Element
 from scripts.DataStructures.sorted_array import SortedArray
-from scripts.GameTypes import UISheetPosition, Resolution, HitboxType, SortableFunction, SF_key
+from scripts.GameTypes import UISheetPosition, HitboxType, SortableFunction, SF_key
 
 
 class Button(UI_Element):

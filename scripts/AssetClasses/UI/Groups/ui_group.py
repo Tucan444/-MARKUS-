@@ -36,6 +36,24 @@ class UI_Group:
     def clone(self) -> 'UI_Group':
         return self.game.utilities.load_group(self.as_json, self.game, self.ui_sheet)
 
+    @property
+    def num_elements(self) -> int:
+        return len(self.elements)
+
+    @property
+    def active_count(self) -> int:
+        counter: int = 0
+
+        for element in self.elements:
+            if element.active:
+                counter += 1
+
+        return counter
+
+    def set_active(self, active: bool) -> None:
+        for element in self.elements:
+            element.active = active
+
     def clear_callbacks(self) -> None:
         for element in self.elements:
             element.clear_callbacks()

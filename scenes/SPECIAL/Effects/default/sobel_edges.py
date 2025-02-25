@@ -1,8 +1,6 @@
-from pygame import Vector2
-
 from scenes.SPECIAL.Effects.Effect import Effect
 from scenes.SPECIAL.Effects.default.texture_calculator import TextureCalculator
-from scripts.GameTypes import Scaling, ColorNormalized, Percentage, OperationType
+from scripts.GameTypes import ColorNormalized, Percentage, OperationType, FloatDoubleFBO
 from scripts.Utilities.Graphics.double_framebuffer import DoubleFramebuffer
 from scripts.Utilities.Graphics.frag import Frag
 from scripts.Utilities.Graphics.kernel import Kernel
@@ -15,7 +13,7 @@ class SobelEdges(Effect):
         super().__init__(frag)
 
         self.tex: DoubleFramebuffer = self.graphics.double_fbo
-        self.calculation_target: DoubleFramebuffer = None
+        self.calculation_target: FloatDoubleFBO = None
         self.box_blur: 'BoxBlur' = None
         self.pixel_transform: 'PixelTransform' = None
         self.edge_finalizer: 'PixelTransform' = None
@@ -69,6 +67,7 @@ class SobelEdges(Effect):
 
         self.texture_calculator.tex_a = self.calculation_target.front
         self.texture_calculator.tex_b = self.calculation_target.back
+        self.texture_calculator.target = self.frag.target
         self.texture_calculator.operation = self.edge_operation
 
         self.convolution_x.tex = self.frag.target
@@ -79,7 +78,6 @@ class SobelEdges(Effect):
         self.pixel_transform.frag.flip_fbo = False
         self.pixel_transform.frag.target = self.frag.target
 
-        self.texture_calculator.frag.target = self.frag.target
         self.texture_calculator.frag.flip_fbo = False
 
     def _execute_frag(self) -> None:

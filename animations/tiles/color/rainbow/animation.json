@@ -2,14 +2,15 @@
   "name": "tiles/color/rainbow",
   "loop": true,
   "pong": true,
+  "reversed": true,
   "flip_x": false,
   "flip_y": true,
   "generate_flipped": true,
   "frame_durations": [
-    0.5,
-    0.4,
-    0.3,
-    0.1,
-    0.05
+    5,
+    4,
+    3,
+    1,
+    0.5
   ]
 }

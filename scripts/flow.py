@@ -1,7 +1,7 @@
 import math
 import time
+
 import pygame
-from pygame import Vector2, Vector3
 
 from scripts.GameTypes import Success, WorldTime, RealTime, Time
 from scripts.Utilities.Flow.tick_machine import TickMachine
@@ -9,6 +9,7 @@ from scripts.Utilities.Flow.timeline import Timeline
 from scripts.Utilities.Flow.timer import Timer
 
 
+# todo add follow like abstraction that can be easily implemented, like follow here, lerp
 class Flow:
     def __init__(self, game: 'Game', frame_rate: int, time_speed: float=1):
         self.game: 'Game' = game
@@ -102,7 +103,7 @@ class Flow:
         return time.time() - self._game_start_time
 
     @property
-    def timeline_raw(self) -> Timeline:
+    def timeline_real(self) -> Timeline:
         return Timeline(self.game, "real timeline", 1 / self.time_speed)
 
     # USING WORLD TIME
@@ -114,6 +115,7 @@ class Flow:
     def inv_dt(self) -> WorldTime:
         return 1 / self.dt if self.dt != 0 else 1_000_000
 
+    # optimizable, if needed try with numba
     # returns (element, integral)
     def growth(self, element: float, expansion: float, dt: Time=None) -> tuple[float, float]:
         if dt is None:

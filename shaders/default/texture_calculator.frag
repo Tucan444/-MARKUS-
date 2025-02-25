@@ -9,6 +9,7 @@ uniform int operation;
 
 in vec2 uv;
 out vec4 color;
+// on_need_basis maybe hue/saturation maps
 
 void main() {
     vec3 a_color = (texture(tex_a, uv) * a_amount).rgb;

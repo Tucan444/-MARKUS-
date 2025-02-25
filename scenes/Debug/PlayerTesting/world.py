@@ -8,6 +8,9 @@ from scripts.GameTypes import WorldPosition, CommandType
 from scripts.Utilities.Camera.screen_loop import ScreenLoop
 from scripts.Utilities.Flow.timeline import Timeline
 from scripts.Utilities.Graphics.graphics_command import GraphicsCommand
+from scripts.Utilities.Particles.ParticleTypes.circle_particle import CircleParticle
+from scripts.Utilities.Particles.particle_spawner import ParticleSpawner
+from scripts.Utilities.Particles.particle_system import ParticleSystem
 from scripts.Utilities.physics_entity import PhysicsEntity
 
 
@@ -34,6 +37,11 @@ class World(SceneBehaviour):
                                                   Vector2(1000, 200), depth_range=Vector2(1, 50),
                                                   timeline=Timeline(self.game, "loop", 1))
 
+        self.particle_system: ParticleSystem = ParticleSystem(self.game, 1_000)
+        self.spawner: ParticleSpawner = ParticleSpawner(self.game, self.particle_system,
+                                                        Vector2(100, -50), 2.2, Vector2(2, -1),
+                                                        Timeline(self.game, "csp", 1))
+
     def init(self):
         self.tilemap = self.game.assets.tilemaps[self.tilemap_name]
         self.prime_map = self.game.assets.tilemaps[self.prime_map_name]
@@ -55,6 +63,7 @@ class World(SceneBehaviour):
         self.player.gravity = Vector2(100, 1000)
 
         self.screen_loop.generate_loop_images(200)
+        self.spawner.spawn_particles(200, CircleParticle)
 
     def update(self):
         self.screen_loop.update_movement()
@@ -63,6 +72,11 @@ class World(SceneBehaviour):
 
         self.tilemap.blit()
         self.tilemap.update_animations()
+
+        self.particle_system.update()
+        self.particle_system.blit()
+        self.spawner.spawn_particles(200, CircleParticle)
+        #print(self.particle_system.total_particle_count)
 
         #self.player.render()
         self.player.update(movement=self.player_controller.movement, blit_site=True)

@@ -1,14 +1,15 @@
 from scripts.DataStructures.sorted_array import SortedArray
 from scripts.GameTypes import Percentage, SortableFunction, SF_key
+from scripts.Utilities.Flow.timeline import Timeline
 
 
 class Timer:
-    def __init__(self, game: 'Game', name: str, duration: float, time_speed: float=1) -> None:
+    def __init__(self, game: 'Game', name: str, duration: float, timeline: Timeline=None) -> None:
         self.game: 'Game' = game
         self.name: str = name
         self.duration: float = duration
-        self.time_speed: float = time_speed
         self.ended: bool = False
+        self.timeline = timeline if timeline is not None else Timeline.blank(game)
 
         self.accumulated_time: float = 0
         self.on_done: SortedArray = SortedArray(SortableFunction, key=SF_key)
@@ -17,7 +18,7 @@ class Timer:
     def as_string(self) -> str:
         return (f"name: {self.name}, "
                 f"duration: {round(self.duration, 3)}, "
-                f"time_speed: {round(self.time_speed, 2)}, "
+                f"time_speed: {round(self.timeline.real_time_speed, 2)}, "
                 f"ended: {self.ended}, "
                 f"accumulated time: {self.accumulated_time}, "
                 f"number of callbacks: {len(self.on_done)}")
@@ -43,7 +44,7 @@ class Timer:
         if self.ended:
             return
 
-        self.accumulated_time += self.game.flow.dt * self.time_speed
+        self.accumulated_time += self.timeline.dt
 
         if self.accumulated_time >= self.duration:
             self.ended = True

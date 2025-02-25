@@ -1,0 +1,3 @@
+In EditorTile.tile, position is not defined.
+
+In EditorTile.preview, you either specify "image", "color" or nothing(assert "animation" in tile).

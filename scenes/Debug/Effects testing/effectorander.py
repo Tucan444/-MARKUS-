@@ -6,13 +6,14 @@ from scenes.SPECIAL.Effects.Effect import Effect
 from scenes.SPECIAL.Effects.default.texture_calculator import TextureCalculator
 from scenes.scene_behaviour import SceneBehaviour
 from scripts.AssetClasses.Tilemap.tilemap import Tilemap
-from scripts.GameTypes import WorldPosition, CommandType, ColorNormalized, PrisonShape, OperationType
+from scripts.GameTypes import WorldPosition, CommandType, ColorNormalized, PrisonShape, OperationType, FloatDoubleFBO
 from scripts.Utilities.Camera.screen_loop import ScreenLoop
 from scripts.Utilities.Flow.timeline import Timeline
 from scripts.Utilities.Graphics.double_framebuffer import DoubleFramebuffer
 from scripts.Utilities.Graphics.effect_area import EffectArea
 from scripts.Utilities.Graphics.graphics_command import GraphicsCommand
 from scripts.Utilities.Graphics.kernel import Kernel
+from scripts.Utilities.Graphics.light_gpu import LightGPU
 from scripts.Utilities.physics_entity import PhysicsEntity
 
 
@@ -36,6 +37,7 @@ class Effectorander(SceneBehaviour):
         self.positioned_effect: Effect = None
         self.pe2: Effect = None
         self.pe3: Effect = None
+        self.lighting: Effect = None
 
         self.blur_command: GraphicsCommand = None
         self.pt_command: GraphicsCommand = None
@@ -53,10 +55,12 @@ class Effectorander(SceneBehaviour):
         self.positioned_effect_command: GraphicsCommand = None
         self.pe2_command: GraphicsCommand = None
         self.pe3_command: GraphicsCommand = None
+        self.lighting_command: GraphicsCommand = None
 
         self.haze_bloom_fbo: DoubleFramebuffer = None
-        self.sobel_edge_fbo: DoubleFramebuffer = None
+        self.sobel_edge_fbo: FloatDoubleFBO = None
         self.positioning_fbo: DoubleFramebuffer = None
+        self.lighting_fbo: FloatDoubleFBO = None
 
         self.big_effect_edges: EffectArea = None
 
@@ -68,12 +72,14 @@ class Effectorander(SceneBehaviour):
         self.blur_command = GraphicsCommand(self.game, 5, CommandType.EFFECT, effect=self.box_blur)
 
         self.pixel_transform = self.game.graphics.effects["pixel_transform"].clone
-        self.pixel_transform.add = (0.2, 0, 0)
+        #self.pixel_transform.add = (0.2, 0, 0)
         self.pixel_transform.intensity = (1.5, 1.5, 1.5)
-        self.pixel_transform.invert_color = 1
-        self.pixel_transform.grayscale = 0.8
-        self.pixel_transform.dynamic_range = 0.05
-        self.pixel_transform.gamma = 1.3
+        #self.pixel_transform.invert_color = 1
+        #self.pixel_transform.grayscale = 0.8
+        #self.pixel_transform.dynamic_range = 0.05
+        #self.pixel_transform.gamma = 1.3
+        self.pixel_transform.hue_shift = 0
+        self.pixel_transform.saturation_change = 1
         self.pt_command = GraphicsCommand(self.game, 6, CommandType.EFFECT, effect=self.pixel_transform)
 
         self.linear_transform = self.game.graphics.effects["linear_transform"].clone
@@ -162,9 +168,9 @@ class Effectorander(SceneBehaviour):
         self.sobel_edges = self.game.graphics.effects["sobel_edges"].clone
         self.sobel_edges.calculation_target = self.sobel_edge_fbo
         #self.sobel_edges.grayscale_edges = 0.4
-        self.sobel_edges.edge_operation = OperationType.SUBTRACT
-        self.sobel_edges.preblur_pass_size = 20
-        self.sobel_edges.edge_strength = 20
+        #self.sobel_edges.edge_operation = OperationType.SUBTRACT
+        self.sobel_edges.preblur_pass_size = 3
+        self.sobel_edges.edge_strength = 2
         #self.sobel_edges.edge_color = (1, 0.5, 0.2)
         self.sobel_command = GraphicsCommand(self.game, 17, CommandType.EFFECT, effect=self.sobel_edges)
 
@@ -195,12 +201,36 @@ class Effectorander(SceneBehaviour):
         }
         self.pe3_command = GraphicsCommand(self.game, 19, CommandType.EFFECT, effect=self.pe3)
 
+        self.lighting_fbo = self.game.graphics.get_display_double_framebuffer(True)
+        self.lighting = self.game.graphics.effects["lighting"].clone
+        self.lighting.calculation_target = self.lighting_fbo
+        lights = {
+            LightGPU(EffectArea(self.game, Vector2(-292.0, -231.0),Vector2(669.0, 377.0),0, 0.16181818181818183, 1.2363636363636363,True, False),
+                     (255, 255, 255), 0.8),
+            LightGPU(EffectArea(self.game, Vector2(909.0, 490.0),Vector2(279.0, 68.0),0, 0.2, 2,True, False),
+                     (200, 50, 200), 0.9),
+            LightGPU(EffectArea(self.game, Vector2(65.0, -531.0),Vector2(0.0, 0.0),0.2, 0.06363636363636364, -2,True, False),
+                     (200, 200, 100), 0.4),
+            LightGPU(EffectArea(self.game, Vector2(-282.0, -1752.0),Vector2(319.0, 492.0),0.023636363636363636, 0.2, 0.1454545454545455,True, False),
+                     (180, 180, 240), 0.7),
+LightGPU(EffectArea(self.game, Vector2(-184.0, -229.0),Vector2(268.0, 183.0),0, 0, 0,True, False),
+(200, 100, 20), 1.0),
+LightGPU(EffectArea(self.game, Vector2(553.0, -393.0),Vector2(366.0, 322.0),0, 0.06, 0,True, False),
+(200, 400, 200), 2.0),
+LightGPU(EffectArea(self.game, Vector2(-659.0, -376.0),Vector2(0.0, 0.0),0.18727272727272729, 0.11090909090909092, 2,True, False),
+(200, 200, 0), 3.0)
+        }
+        self.lighting.lights = lights
+        self.lighting.ambient_color = (0.2, 0.2, 0.2)
+        self.lighting_command = GraphicsCommand(self.game, 20, CommandType.EFFECT, effect=self.lighting)
+
         # opengl
         if self.game.graphics.opengl:
             self.game.window.displays["main"] = self.game.window.display_new
             self.game.window.active_display = "main"
 
     def update(self):
+        self.pixel_transform.hue_shift += self.game.flow.dt * 0.05
         self.linear_transform.rotate += self.game.flow.dt * 0.05
         self.linear_transform.hyper_rotate += self.game.flow.dt * 0.01
         #if self.game.flow.game_run_time > 5:
@@ -215,9 +245,9 @@ class Effectorander(SceneBehaviour):
         if self.game.graphics.opengl:
             pass
             #self.game.graphics.command_queue.append(self.conv_command)
-            self.game.graphics.command_queue.append(self.conv2_command)
+            #self.game.graphics.command_queue.append(self.conv2_command)
             #self.game.graphics.command_queue.append(self.blur_command)
-            #self.game.graphics.command_queue.append(self.pt_command)
+            self.game.graphics.command_queue.append(self.pt_command)
             #self.game.graphics.command_queue.append(self.linear_command)
             #self.game.graphics.command_queue.append(self.wavy_command)
             #self.game.graphics.command_queue.append(self.vignette_command)
@@ -227,9 +257,11 @@ class Effectorander(SceneBehaviour):
             #self.game.graphics.command_queue.append(self.prison_command)
             #self.game.graphics.command_queue.append(self.haze_bloom_command)
             #self.game.graphics.command_queue.append(self.sobel_command)
-            self.game.graphics.command_queue.append(self.positioned_effect_command)
+            #self.game.graphics.command_queue.append(self.positioned_effect_command)
             #self.game.graphics.command_queue.append(self.pe2_command)
             #self.game.graphics.command_queue.append(self.pe3_command)
+            self.game.graphics.command_queue.append(self.lighting_command)
+            pass
 
         #bub = self.big_effect_edges.sdf_display(self.game.mouse.position)
         #pygame.draw.rect(self.game.window.display, (255, 0, 0, 0.5), self.big_effect_edges.display_rect)

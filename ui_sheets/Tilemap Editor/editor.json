@@ -509,7 +509,7 @@
         "input wait": 0,
         "active": true,
         "hitbox type": 0,
-        "is_on": false,
+        "is_on": true,
         "enabled": true,
         "on image": "tilemap_editor/toolbar/compact_on",
         "on image disabled": "tilemap_editor/toolbar/compact_on",
@@ -517,6 +517,30 @@
         "off image": "tilemap_editor/toolbar/compact_off",
         "off image disabled": "tilemap_editor/toolbar/compact_off",
         "off image hover": "tilemap_editor/toolbar/compact_off_hover"
+    },
+    {
+        "type": "toggle",
+        "size": [
+            50,
+            50
+        ],
+        "name": "SNAPON",
+        "position": [
+            300.0,
+            50.0
+        ],
+        "layer": 0,
+        "input wait": 0,
+        "active": true,
+        "hitbox type": 0,
+        "is_on": false,
+        "enabled": true,
+        "on image": "tilemap_editor/toolbar/snapon_on",
+        "on image disabled": "tilemap_editor/toolbar/snapon_on",
+        "on image hover": "tilemap_editor/toolbar/snapon_on_hover",
+        "off image": "tilemap_editor/toolbar/snapon_off",
+        "off image disabled": "tilemap_editor/toolbar/snapon_off",
+        "off image hover": "tilemap_editor/toolbar/snapon_off_hover"
     }
   ],
   "groups": [

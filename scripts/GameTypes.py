@@ -1,5 +1,6 @@
 from enum import Enum
 
+import pygame
 from moderngl import Texture, Framebuffer
 from pygame import Vector3
 from pygame.math import Vector2
@@ -38,9 +39,15 @@ PixelDisplayVec = PixelVec
 PixelFocusedVec = PixelVec
 PixelWorldVec = PixelVec
 
+# rects
+Rect = pygame.FRect | pygame.Rect
+DisplayRect = Rect
+WorldRect = Rect
+
 # tiles
 
 GridPosition = Position
+GridRect = Rect
 TilePosition = tuple[int, int]
 OffgridTilePosition = tuple[float, float]
 TileHitInfo = tuple[float, 'Tile']
@@ -92,6 +99,7 @@ class CommandType(Enum):
 
 Viewport = tuple[float, float, float, float]
 ShaderAttributes = dict[str, tuple|Texture|list|Vector2|Vector3|Matrix2D|Matrix3D|Framebuffer]
+FloatDoubleFBO = 'DoubleFramebuffer'
 
 # kernel
 Byte = int
@@ -119,6 +127,7 @@ Color = tuple[int, int, int]
 VectorColor = Vector3
 ColorNormalized = tuple[float, float, float]
 Percentage = float
+RealPercentage = float
 Angle = float
 HyperAngle = float
 Shear = tuple[Vector2, bool]

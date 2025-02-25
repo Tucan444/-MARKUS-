@@ -2,6 +2,7 @@
   "name": "player/run",
   "loop": true,
   "pong": false,
+  "reversed": false,
   "flip_x": false,
   "flip_y": false,
   "generate_flipped": true,

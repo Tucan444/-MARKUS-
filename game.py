@@ -41,19 +41,19 @@ class Game:
             5000, "GAME END", self.end
         )
 
-    def _init(self):
+    def _init(self, *_):
         self.alive = True
         self.inputs.on_quit.add(self._on_quit_funka)
 
         self._init_components()
 
-    def run(self):
+    def run(self, *_):
         self._init()
 
         while self.alive:
             self._update_components()
 
-    def end(self):
+    def end(self, *_):
         self._end_components()
 
         pygame.quit()

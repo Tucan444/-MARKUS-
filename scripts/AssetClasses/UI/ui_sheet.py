@@ -31,16 +31,33 @@ class UI_Sheet:
             else:
                 json.dump(self.as_json, f, indent=4)
 
+    def clear(self) -> None:
+        for element in list(self.elements.values()):
+            element.detach()
+
+        self.elements = {}
+        self.elements_ordered.clear()
+
+        self.groups = {}
+
     def reload(self):
+        self.clear()
+
         sheet: UI_Sheet = self.game.utilities.load_ui_sheet(
             self.filepath[1+len(self.game.utilities.DEFAULT_UI_SHEET_PATH):], self.game)
 
         self.name = sheet.name
         self.position = sheet.position
+        self.in_world = sheet.in_world
 
         self.elements = sheet.elements
         self.elements_ordered = sheet.elements_ordered
+        for element in self.elements_ordered:
+            element.ui_sheet = self
+
         self.groups = sheet.groups
+        for group in self.groups.values():
+            group.ui_sheet = self
 
         self._intersecting_mouse = False
         self._last_frame_update = -1

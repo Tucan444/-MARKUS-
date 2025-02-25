@@ -2,10 +2,10 @@ import importlib
 import inspect
 import pygame.image
 import re
-from pygame import Vector2
+from pygame import Vector2, Surface
 
 from scripts.AssetClasses.Tilemap.Tiles.animated_tile import AnimatedTile
-from scripts.AssetClasses.Tilemap.tile_component import TileComponent
+from scripts.AssetClasses.Tilemap.Tiles.tile_component import TileComponent
 from scripts.AssetClasses.UI.ui_sheet import UI_Sheet
 from scripts.AssetClasses.UI.Groups.ui_group import UI_Group
 from scripts.AssetClasses.UI.Groups.ui_select_group import UI_SelectGroup
@@ -17,7 +17,7 @@ from scripts.AssetClasses.UI.toggle import Toggle
 from scripts.AssetClasses.UI.image import Image
 from scripts.AssetClasses.UI.button import Button
 from scripts.AssetClasses.UI.text import Text
-from scripts.AssetClasses.animation import Animation
+from scripts.AssetClasses.Animation.animation import Animation
 from scripts.AssetClasses.scene import Scene
 from scenes.scene_behaviour import SceneBehaviour
 from scripts.AssetClasses.Tilemap.tilemap import Tilemap
@@ -68,7 +68,7 @@ class Utilities:
         return self.as_string
 
     @staticmethod
-    def call_functions(functions: SortedArray, args=None) -> None:
+    def call_functions(functions: SortedArray, args: list|None=None) -> None:
         if args is None:
             args = []
 
@@ -110,6 +110,23 @@ class Utilities:
         return self.camel_case_pattern.sub("_", string).lower()
 
     @staticmethod
+    def color_swap(image: Surface, old_color: Color, new_color: Color, inplace: bool=False) -> Surface:
+        new_image: Surface = Surface(image.get_size())
+        new_image.fill(new_color)
+
+        previous_colorkey: Color|None = image.get_colorkey()
+        image.set_colorkey(old_color)
+        new_image.blit(image, (0, 0))
+
+        if not inplace:
+            new_image.set_colorkey(previous_colorkey)
+            return new_image
+
+        image.blit(new_image, (0, 0))
+        image.set_colorkey(previous_colorkey)
+        return image
+
+    @staticmethod
     def load_image(path: str, colorkey: Color = (0, 0, 0)) -> pygame.Surface:
         img: pygame.Surface = pygame.image.load(Utilities.DEFAULT_IMAGE_PATH + "/" + path).convert()
         img.set_colorkey(colorkey)
@@ -147,6 +164,7 @@ class Utilities:
                 assert("name" in keys)
                 assert("loop" in keys)
                 assert("pong" in keys)
+                assert("reversed" in keys)
                 assert("flip_x" in keys)
                 assert("flip_y" in keys)
                 assert("generate_flipped" in keys)
@@ -162,7 +180,7 @@ class Utilities:
 
         animation: Animation = Animation(game, frames, metadata["name"],
                                    metadata["frame_durations"], metadata["loop"], metadata["pong"],
-                                         metadata["flip_x"], metadata["flip_y"])
+                                   metadata["reversed"], metadata["flip_x"], metadata["flip_y"])
 
         if metadata["generate_flipped"]:
             animation.generate_flipped()
@@ -226,7 +244,7 @@ class Utilities:
 
                     if file[-3:] == ".py":
                         scripts.append(f"{dir_}/{file}")
-                    else:
+                    elif "." not in file:
                         to_add.append(f"{dir_}/{file}")
 
             for item in to_clear:
@@ -247,7 +265,7 @@ class Utilities:
         if "order" not in metadata:
             metadata["order"] = 0
 
-        scene: Scene = Scene(game, metadata["name"], metadata["active"], metadata["order"])
+        scene: Scene = Scene(game, metadata["name"], metadata["active"], metadata["order"], local_path)
         objects: dict[str, SceneBehaviour] = {}
         objects_ordered: list[SceneBehaviour] = []
         classes_for_scene: dict[str, type(object)] = {}
@@ -376,11 +394,12 @@ class Utilities:
 
         image: pygame.Surface | None = None
         if is_image_tile:
-            image = Utilities._load_tile_image(tile_data, grid)
+            image = Utilities._load_tile_image(tile_data, grid, is_offgrid)
 
         animation: Animation | None = None
         if not is_image_tile:
-            animation = Utilities._load_tile_animation(tile_data, grid)
+            assert "animation" in tile_data
+            animation = Utilities._load_tile_animation(tile_data, grid, is_offgrid)
 
         positionAsStrings: list[str] = tile_data["position"].split(";")
         assert(len(positionAsStrings) == 2)
@@ -390,18 +409,20 @@ class Utilities:
             position: TilePosition = (int(positionAsStrings[0]), int(positionAsStrings[1]))
 
         tile_groups: set[str] = set(tile_data["groups"]) if "groups" in tile_data else set()
-        components: dict[str, TileComponent] = {}
+        components: list[TileComponent] = []
 
         if is_image_tile:
+            assert image is not None
             tile: Tile = Tile(grid, image, position, is_offgrid, tile_data["alpha"], tile_groups)
         else:
+            assert animation is not None
             tile: AnimatedTile = AnimatedTile(grid, animation, position, is_offgrid, tile_data["clone_animation"],
                                               tile_data["alpha"], tile_groups)
 
         if "components" in tile_data:
             for component_data in tile_data["components"]:
                 component: TileComponent = game.assets.components[component_data["class_name"]].load(component_data, tile)
-                components[component.name] = component
+                components.append(component)
 
         tile.components = components
 
@@ -414,12 +435,19 @@ class Utilities:
         return tile
 
     @staticmethod
-    def _load_tile_image(tile_data: dict, grid: Grid) -> pygame.Surface:
+    def _load_tile_image(tile_data: dict, grid: Grid, offgrid: bool) -> pygame.Surface:
+        if offgrid:
+            return grid.game.assets.images[tile_data["image"]]
+
         grid.rescale_image_for_grid(tile_data["image"])
         return grid.get_image(tile_data["image"])
 
     @staticmethod
-    def _load_tile_animation(tile_data: dict, grid: Grid) -> Animation:
+    def _load_tile_animation(tile_data: dict, grid: Grid, offgrid: bool) -> Animation:
+        if offgrid:
+            grid.tilemap.clone_animation_for_tilemap(tile_data["animation"])
+            return grid.tilemap.get_cloned_animation(tile_data["animation"])
+
         grid.rescale_animation_for_grid(tile_data["animation"])
         return grid.get_animation(tile_data["animation"])
 

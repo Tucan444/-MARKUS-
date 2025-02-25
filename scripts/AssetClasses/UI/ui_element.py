@@ -25,7 +25,7 @@ class UI_Element:
             "position": list(self.position),
             "layer": self.layer,
             "input wait": self.input_wait,
-            "active": self.active,
+            "active": self._active,
             "hitbox type": self.hitbox_type.value
         }
 

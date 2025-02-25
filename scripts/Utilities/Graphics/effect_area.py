@@ -1,9 +1,10 @@
 import pygame
 from pygame import Vector2
 
-from scripts.GameTypes import DisplayPosition, WorldPosition, Subspace, UVN_Vector, UVN_Position
+from scripts.GameTypes import DisplayPosition, WorldPosition, Subspace, UVN_Vector, UVN_Position, DisplayRect
 
 
+# suggestion add rotation, in scribble are notes
 class EffectArea:
     INV_SQRT2: float = 1 / (2 ** 0.5)
 
@@ -20,6 +21,11 @@ class EffectArea:
         self.hill_of_peace: bool = hill_of_peace
 
     @property
+    def clone(self) -> 'EffectArea':
+        return EffectArea(self.game, self.position, self.size, self.radius, self.falloff,
+                          self.falloff_speed, self.in_world, self.hill_of_peace)
+
+    @property
     def falloff_inv(self) -> float:
         if self.falloff == 0:
             return 10000
@@ -27,7 +33,7 @@ class EffectArea:
         return 1 / self.falloff
 
     @property
-    def display_rect(self) -> pygame.FRect:
+    def display_rect(self) -> DisplayRect:
         radius_vec: DisplayPosition = self.game.graphics.position_uv_to_display(Vector2(
             self.radius * self.game.window.aspect_ratio_inverse,
             self.radius

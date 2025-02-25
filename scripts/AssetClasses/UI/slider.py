@@ -20,7 +20,7 @@ class Slider(UI_Element):
         self.min_value: float | int = min_value if not whole_numbers else min_value // 1
         self.max_value: float | int = max_value if not whole_numbers else max_value // 1
         self.initial_value: float | int = initial_value if not whole_numbers else initial_value // 1
-        self.value: float | int = self.initial_value
+        self._value: float | int = self.initial_value
         self.range: float | int = self.max_value - self.min_value
         self.whole_numbers: bool = whole_numbers
 
@@ -126,13 +126,26 @@ class Slider(UI_Element):
         )
 
     @property
+    def value(self) -> float:
+        return self._value
+
+    @value.setter
+    def value(self, value: float) -> None:
+        original_value: float = self._value
+        self._value = value
+
+        if original_value != self._value:
+            self.slider_processed_up_to_date = False
+            self.game.utilities.call_functions(self.invoke_on_value_change, (self,))
+
+    @property
     def slider_rect(self) -> pygame.Rect:
         return pygame.Rect(*self.slider_blit_position, *self.slider_size)
 
     # returns values in range [0, 1]
     @property
     def progress(self) -> Percentage:
-        return (self.value - self.min_value) / self.range
+        return (self._value - self.min_value) / self.range
 
     @property
     def cutoff(self) -> float:
@@ -206,17 +219,17 @@ class Slider(UI_Element):
         self.pressed = False
 
     def update_value(self) -> None:
-        original_value: float | int = self.value
+        original_value: float | int = self._value
 
         mouse_pos_local: UISheetPosition = self.game.mouse.position - self.display_position
         x_progress = mouse_pos_local[0] - self.local_slider_position[0] - (self.slider_size[1] * 0.5)
         x_progress /= self.range_length
         x_progress = max(0, min(1, x_progress))
 
-        self.value = self.min_value + (self.range * x_progress)
-        self.value = self.value // 1 if self.whole_numbers else self.value
+        self._value = self.min_value + (self.range * x_progress)
+        self._value = self._value // 1 if self.whole_numbers else self._value
 
-        if original_value != self.value:
+        if original_value != self._value:
             self.slider_processed_up_to_date = False
             self.game.utilities.call_functions(self.invoke_on_value_change, (self,))
 

@@ -7,8 +7,8 @@ from scripts.Utilities.Graphics.frag import Frag
 
 class Prison(Effect):
     def __init__(self, frag: Frag, obscure_color: ColorNormalized=(0, 0, 0), obscure: Percentage=0,
-                 obscure_shape: PrisonShape=0, bar_color: ColorNormalized=(0, 0, 0), imprisonment: Percentage=0,
-                 bar_shape: PrisonShape=0, repeatance: float=6, obscure_last: bool=True):
+                 obscure_shape: PrisonShape=PrisonShape.NO_SHAPE, bar_color: ColorNormalized=(0, 0, 0), imprisonment: Percentage=0,
+                 bar_shape: PrisonShape=PrisonShape.NO_SHAPE, repeatance: float=6, obscure_last: bool=True):
 
         super().__init__(frag)
 

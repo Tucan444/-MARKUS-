@@ -1,6 +1,6 @@
 {
   "name": "player testing",
-  "active": false,
+  "active": true,
   "order": 0,
   "active scripts": [
     "world.py"

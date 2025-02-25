@@ -13,7 +13,7 @@
                 1253,
                 703
             ],
-            "name": "guha",
+            "name": "button",
             "position": [
                 -100.0,
                 -100.0
@@ -34,7 +34,7 @@
                 1024,
                 1024
             ],
-            "name": "FUKA",
+            "name": "image",
             "position": [
                 100.0,
                 0.0
@@ -52,7 +52,7 @@
                 32,
                 32
             ],
-            "name": "guh",
+            "name": "button2",
             "position": [
                 600.0,
                 0.0
@@ -73,7 +73,7 @@
                 150,
                 20
             ],
-            "name": "Theresa",
+            "name": "Theresa Scroll Zone",
             "position": [
                 700.0,
                 0.0
@@ -100,10 +100,10 @@
             "vertical": true,
             "flip direction": false,
             "zone elements": [
-                "Kiana",
-                "guh",
-                "uga buga",
-                "FU HUA"
+                "Kiana Slider",
+                "button",
+                "image",
+                "FU HUA Dropdown"
             ]
         },
         {
@@ -112,7 +112,7 @@
                 500,
                 100
             ],
-            "name": "bla",
+            "name": "KYS",
             "position": [
                 0.0,
                 0.0
@@ -150,7 +150,7 @@
                 32,
                 32
             ],
-            "name": "Himeko Vermilion Knight",
+            "name": "Himeko Vermilion Knight Toggle",
             "position": [
                 165.0,
                 210.0
@@ -174,7 +174,7 @@
                 32,
                 32
             ],
-            "name": "Himeko x Kiana",
+            "name": "Himeko x Kiana Toggle2",
             "position": [
                 185.0,
                 210.0
@@ -198,7 +198,7 @@
                 32,
                 32
             ],
-            "name": "Himeko",
+            "name": "Himeko Toggle3",
             "position": [
                 150.0,
                 200.0
@@ -222,7 +222,7 @@
                 150,
                 20
             ],
-            "name": "uga buga",
+            "name": "uga buga PROGRESS BAR",
             "position": [
                 -50.0,
                 150.0
@@ -244,7 +244,7 @@
                 146,
                 32
             ],
-            "name": "Kiana",
+            "name": "Kiana Slider",
             "position": [
                 200.0,
                 -50.0
@@ -273,7 +273,7 @@
                 150,
                 20
             ],
-            "name": "FU HUA",
+            "name": "FU HUA Dropdown",
             "position": [
                 200.0,
                 150.0
@@ -344,26 +344,26 @@
     "groups": [
         {
             "type": "ui group",
-            "name": "toggles movers",
+            "name": "toggles movers UI GROUP",
             "elements": [
-                "Himeko Vermilion Knight",
-                "Himeko x Kiana",
-                "bla",
-                "guha",
-                "Kiana",
-                "uga buga",
-                "Himeko",
-                "FU HUA",
-                "guh"
+                "Himeko Vermilion Knight Toggle",
+                "Himeko x Kiana Toggle2",
+                "button",
+                "button2",
+                "Kiana Slider",
+                "uga buga PROGRESS BAR",
+                "Himeko Toggle3",
+                "FU HUA Dropdown",
+                "image"
             ]
         },
         {
             "type": "select group",
-            "name": "oh god work",
+            "name": "oh god work SELECT GROUP",
             "elements": [
-                "Himeko",
-                "Himeko Vermilion Knight",
-                "Himeko x Kiana"
+                "Himeko Toggle3",
+                "Himeko Vermilion Knight Toggle",
+                "Himeko x Kiana Toggle2"
             ],
             "max count": 2,
             "limit off toggles": true,

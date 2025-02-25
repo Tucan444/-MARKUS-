@@ -1,0 +1,387 @@
+{
+  "type": "ui sheet",
+  "name": "area effect editor ui sheet",
+  "position": [
+    0, 0
+  ],
+  "in world": false,
+  "elements": [
+    {
+        "type": "image",
+        "size": [
+            200,
+            810
+        ],
+        "name": "BG STRIP",
+        "position": [
+            0.0,
+            0.0
+        ],
+        "layer": -80,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "image": "tilemap_editor/scroll_strip_flipped_x",
+        "image hover": "tilemap_editor/scroll_strip_flipped_x"
+    },
+
+    {
+        "type": "text",
+        "size": [
+            180,
+            50
+        ],
+        "name": "NEW",
+        "position": [
+            10.0,
+            0.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "new",
+        "color idle": [
+            200,
+            200,
+            255
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": true,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+    {
+        "type": "text",
+        "size": [
+            180,
+            50
+        ],
+        "name": "POINT",
+        "position": [
+            10.0,
+            50.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "point",
+        "color idle": [
+            120,
+            120,
+            120
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": true,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+    {
+        "type": "text",
+        "size": [
+            180,
+            50
+        ],
+        "name": "IN WORLD",
+        "position": [
+            10.0,
+            100.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "in world",
+        "color idle": [
+            200,
+            200,
+            255
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": true,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+    {
+        "type": "text",
+        "size": [
+            180,
+            50
+        ],
+        "name": "HILL OF PEACE",
+        "position": [
+            10.0,
+            150.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "hill of peace",
+        "color idle": [
+            120,
+            120,
+            120
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": true,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+
+    {
+        "type": "text",
+        "size": [
+            100,
+            50
+        ],
+        "name": "COUNT",
+        "position": [
+            100.0,
+            200.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "0",
+        "color idle": [
+            120,
+            120,
+            120
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": false,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+    {
+        "type": "text",
+        "size": [
+            100,
+            50
+        ],
+        "name": "SELECTED",
+        "position": [
+            100.0,
+            250.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "-1",
+        "color idle": [
+            120,
+            120,
+            120
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": false,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    },
+
+      {
+        "type": "slider",
+        "size": [
+            84,
+            33
+        ],
+        "name": "RadiusSlider",
+        "position": [
+            0.0,
+            200.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "min value": 0,
+        "max value": 0.2,
+        "initial value": 0,
+        "whole numbers": false,
+        "knob hitbox type": 0,
+        "slider hitbox type": 0,
+        "slider": "tilemap_editor/grid/slider",
+        "slider filled": "tilemap_editor/grid/slider_filled",
+        "knob": "tilemap_editor/grid/knob",
+        "knob hover": "tilemap_editor/grid/knob_hover",
+        "knob pressed": "tilemap_editor/grid/knob_pressed",
+        "knob disabled": "tilemap_editor/grid/knob_disabled"
+    },
+      {
+        "type": "slider",
+        "size": [
+            84,
+            33
+        ],
+        "name": "FalloffSlider",
+        "position": [
+            0.0,
+            240.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "min value": 0,
+        "max value": 0.2,
+        "initial value": 0,
+        "whole numbers": false,
+        "knob hitbox type": 0,
+        "slider hitbox type": 0,
+        "slider": "tilemap_editor/grid/slider",
+        "slider filled": "tilemap_editor/grid/slider_filled",
+        "knob": "tilemap_editor/grid/knob",
+        "knob hover": "tilemap_editor/grid/knob_hover",
+        "knob pressed": "tilemap_editor/grid/knob_pressed",
+        "knob disabled": "tilemap_editor/grid/knob_disabled"
+    },
+      {
+        "type": "slider",
+        "size": [
+            84,
+            33
+        ],
+        "name": "FalloffSpeedSlider",
+        "position": [
+            0.0,
+            280.0
+        ],
+        "layer": -2,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "enabled": true,
+        "min value": -2,
+        "max value": 2,
+        "initial value": 0,
+        "whole numbers": false,
+        "knob hitbox type": 0,
+        "slider hitbox type": 0,
+        "slider": "tilemap_editor/grid/slider",
+        "slider filled": "tilemap_editor/grid/slider_filled",
+        "knob": "tilemap_editor/grid/knob",
+        "knob hover": "tilemap_editor/grid/knob_hover",
+        "knob pressed": "tilemap_editor/grid/knob_pressed",
+        "knob disabled": "tilemap_editor/grid/knob_disabled"
+    },
+
+    {
+        "type": "text",
+        "size": [
+            170,
+            50
+        ],
+        "name": "LIGHT",
+        "position": [
+            10.0,
+            320.0
+        ],
+        "layer": 1,
+        "input wait": -4,
+        "active": true,
+        "hitbox type": 0,
+        "text": "save as lights",
+        "color idle": [
+            120,
+            120,
+            120
+        ],
+        "color hover": [
+            220,
+            220,
+            220
+        ],
+        "color pressed": [
+            180,
+            180,
+            180
+        ],
+        "is interactive": true,
+        "font": "Helvetica-Bold",
+        "font size": 30,
+        "bold": true,
+        "centered": true,
+        "visualize boundary": false
+    }
+  ],
+  "groups": [
+  ]
+}

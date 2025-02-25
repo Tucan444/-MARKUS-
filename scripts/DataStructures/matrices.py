@@ -1,8 +1,16 @@
 from pygame.math import Vector2, Vector3
 from math import sin, cos, sinh, cosh
 from array import array
+import math
+
 
 class Matrix2D:
+    PI = math.pi
+    TAU = math.tau
+    HALF_PI = math.pi * 0.5
+    THIRD_PI = math.pi / 3
+    QUARTER_PI = math.pi * 0.25
+
     def __init__(self, i: Vector2, j: Vector2):
         self.i: Vector2 = i
         self.j: Vector2 = j
@@ -55,7 +63,7 @@ class Matrix2D:
         )
 
     @classmethod
-    def get_shear(cls, x_shear: float, y_shear: float, x_first: bool=True) -> 'Matrix2D':
+    def get_shear(cls, x_shear: float, y_shear: float, x_first: bool = True) -> 'Matrix2D':
         x_shear_matrix: Matrix2D = Matrix2D(
             Vector2(1, x_shear),
             Vector2(0, 1)
@@ -105,7 +113,14 @@ class Matrix2D:
             self.i.y, self.j.y
         ])
 
+
 class Matrix3D:
+    PI = math.pi
+    TAU = math.tau
+    HALF_PI = math.pi * 0.5
+    THIRD_PI = math.pi / 3
+    QUARTER_PI = math.pi * 0.25
+
     def __init__(self, i: Vector3, j: Vector3, k: Vector3):
         self.i: Vector3 = i
         self.j: Vector3 = j
@@ -168,7 +183,8 @@ class Matrix3D:
         )
 
     @classmethod
-    def get_shear(cls, x_shear: float, y_shear: float, z_shear: float, order: tuple[int, int, int]=(0, 1, 2)) -> 'Matrix3D':
+    def get_shear(cls, x_shear: float, y_shear: float, z_shear: float,
+                  order: tuple[int, int, int] = (0, 1, 2)) -> 'Matrix3D':
         x_shear_matrix: Matrix3D = Matrix3D(
             Vector3(1, 0, 0),
             Vector3(x_shear, 1, 0),
@@ -192,7 +208,7 @@ class Matrix3D:
         matrices[order[1]] = y_shear_matrix
         matrices[order[2]] = z_shear_matrix
 
-        assert(None not in matrices)
+        assert (None not in matrices)
 
         matrices[1].after(matrices[0])
         matrices[2].after(matrices[1])

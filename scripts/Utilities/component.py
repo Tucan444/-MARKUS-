@@ -5,7 +5,7 @@ class Component:
 
     @property
     def as_json(self) -> dict:
-        return { "class_name": self.__name__ }
+        return { "class_name": self.__class__.__name__ }
 
     @classmethod
     def load(cls, component_data: dict) -> 'Component':

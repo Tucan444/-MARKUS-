@@ -20,6 +20,7 @@ class Frag:
         self.target: DoubleFramebuffer = self.graphics.double_fbo
         self.viewport: Viewport | None = self.graphics.default_viewport
         self.flip_fbo: bool = True
+        self.blend: bool = True
 
         self.vao: VertexArray = self.ctx.vertex_array(self.program, [
             (self.graphics.quad_vertices, '2f', 'position'),
@@ -68,7 +69,8 @@ class Frag:
     def execute(self, reset_attributes: bool=True):
         self._update_attributes()
 
-        self.ctx.enable(moderngl.BLEND)
+        if self.blend:
+            self.ctx.enable(moderngl.BLEND)
         if self.viewport is not None:
             self.target.viewport = self.viewport
 
@@ -84,6 +86,7 @@ class Frag:
             self.reset_attributes()
 
     def reset_attributes(self) -> None:
+        self.blend = True
         self.flip_fbo = True
         self.viewport = self.graphics.default_viewport
         self.target = self.graphics.double_fbo

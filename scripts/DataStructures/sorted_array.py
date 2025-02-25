@@ -28,7 +28,7 @@ class SortedArray:
     def clear(self):
         self.elements = []
 
-    def has(self, element: bool):
+    def has(self, element) -> bool:
         return element in self.elements
 
     @property

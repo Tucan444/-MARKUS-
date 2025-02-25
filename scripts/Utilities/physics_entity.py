@@ -8,7 +8,7 @@ from scripts.Utilities.Flow.timeline import Timeline
 
 class PhysicsEntity:
     def __init__(self, game: 'Game', name: str, position: WorldPosition, size: Resolution,
-                 use_basic_behaviour: bool=True, max_move_size: float=15, timeline: Timeline=None):
+                 use_basic_behaviour: bool = True, max_move_size: float = 15, timeline: Timeline = None):
         self.game: 'Game' = game
         self.name: name = name
         self.last_frame_position: WorldPosition = position
@@ -53,6 +53,20 @@ class PhysicsEntity:
 
         self._use_basic_behaviour: bool = False
         self.use_basic_behaviour: bool = use_basic_behaviour
+
+    @classmethod
+    def FromJson(cls, game: 'Game', json_data: dict) -> 'PhysicsEntity':
+        entity: PhysicsEntity = PhysicsEntity(
+            game, json_data["name"], json_data["position"], json_data["size"],
+            json_data["use_basic_behaviour"], json_data["max_move_size"]
+        )
+
+        entity.velocity = json_data["velocity"]
+        entity.accelerators = json_data["accelerators"]
+        entity.decay = json_data["decay"]
+        entity.is_stuck = json_data["is_stuck"]
+
+        return entity
 
     @property
     def acceleration(self) -> WorldVector:
@@ -116,10 +130,13 @@ class PhysicsEntity:
             "class_name": self.__name__,
             "name": self.name,
             "position": list(self.position),
-            "size" : self.size,
+            "size": self.size,
             "velocity": self.velocity,
-            "gravity": self.gravity,
-            "is stuck": self.is_stuck
+            "accelerators": self.accelerators,
+            "decay": self.decay,
+            "is_stuck": self.is_stuck,
+            "use_basic_behaviour": self.use_basic_behaviour,
+            "max_move_size": self.max_move_size
         }
 
     @property
@@ -129,7 +146,7 @@ class PhysicsEntity:
     @property
     def as_string(self) -> str:
         return (f"name: {self.name}, position: {self.position}, velocity: {self.velocity}, "
-                f"gravity: {self.gravity}, size: {self.size}, number of obstacles: {len(self.obstacles)}, "
+                f"accelerators: {len(self.accelerators)}, decay: {self.decay} size: {self.size}, number of obstacles: {len(self.obstacles)}, "
                 f"is struck: {self.is_stuck}")
 
     def __repr__(self):
@@ -138,7 +155,7 @@ class PhysicsEntity:
     def __str__(self):
         return self.as_string
 
-    def update(self, movement: WorldVector=None, burst: WorldVector=None, blit_site: bool=False) -> None:
+    def update(self, movement: WorldVector = None, burst: WorldVector = None, blit_site: bool = False) -> None:
         if movement is None:
             movement = Vector2()
         if burst is None:
@@ -152,18 +169,20 @@ class PhysicsEntity:
         self._update_acceleration_start(burst)
         displacement = self._update_decay()
 
-        self.frame_velocity = movement + (self.velocity.normalize() * displacement * self.timeline.inv_dt)
-        self.frame_magnitude = self.frame_velocity.length()
+        self.frame_velocity = Vector2(0, 0)
+        self.frame_magnitude = 0
+
+        if self.velocity.length_squared() != 0:
+            self.frame_velocity = movement + (self.velocity.normalize() * displacement * self.timeline.inv_dt)
+            self.frame_magnitude = self.frame_velocity.length()
 
     def _update_forces_end(self) -> None:
         self._update_acceleration_end()
 
     def render(self) -> None:
-        self.game.window.display.blit(self.game.assets.images["random/tile"], self.display_position)
-        # debugging turn off later
-        #pygame.draw.rect(self.game.window.display, (255, 0, 255), self.display_rect)
+        pygame.draw.rect(self.game.window.display, (255, 0, 255), self.display_rect)
 
-    def _update_acceleration_start(self, burst: WorldVector=None) -> None:
+    def _update_acceleration_start(self, burst: WorldVector = None) -> None:
         if burst is None:
             burst = Vector2()
 
@@ -174,6 +193,9 @@ class PhysicsEntity:
 
     def _update_decay(self) -> float:
         velocity_magnitude = self.velocity.length()
+
+        if velocity_magnitude == 0:
+            return 0
 
         new_magnitude, displacement = self.growth(velocity_magnitude, -self.decay)
 
@@ -187,19 +209,19 @@ class PhysicsEntity:
     def _update_acceleration_end(self) -> None:
         self.velocity += self._applied_acceleration
 
-    def _update_movement(self, blit_site: bool=False) -> None:
+    def _update_movement(self, blit_site: bool = False) -> None:
         self.last_frame_position = Vector2(*self.position)
         self.is_stuck: bool = False
 
         frame_movement: WorldVector = self.frame_velocity * self.timeline.dt
         move_site: Subspace = Vector2(self.size[0] + abs(frame_movement.x), self.size[1] + abs(frame_movement.y))
         site_position: WorldPosition = Vector2(min(self.position.x, self.position.x + frame_movement.x),
-                                         min(self.position.y, self.position.y + frame_movement.y))
+                                               min(self.position.y, self.position.y + frame_movement.y))
         site_rect: FRect = FRect(*site_position, *move_site)
         biggest_side: float = max(*move_site)
 
         center: WorldPosition = self.center
-        center_moved: WorldPosition = center + frame_movement * 0.5 # IF BUG ITS PROBABLY HERE, DO IN 2 steps
+        center_moved: WorldPosition = center + frame_movement * 0.5  # IF BUG ITS PROBABLY HERE, DO IN 2 steps
 
         objects_to_check: list[object] = [
             obj for obstacle in self.obstacles for obj in obstacle.physical_objects_around(center_moved, biggest_side)
@@ -236,7 +258,7 @@ class PhysicsEntity:
         if blit_site:
             blit_rect: FRect = FRect(*self.game.camera.position_world_to_display(site_position), *move_site)
             pygame.draw.rect(self.game.window.display, (255, 255, 0), blit_rect)
-            
+
     def _handle_stucking(self, center: Vector2, objects_to_check: list[object],
                          rects_to_check: list[FRect]) -> Detected:
         stuck_causes: list[object] = []

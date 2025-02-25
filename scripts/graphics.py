@@ -252,26 +252,12 @@ class Graphics:
 
     def blit_surface(self, position: UV_Position, surface: Surface, alpha: float=1, equation=moderngl.FUNC_ADD,
                      funcs=(moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA)) -> None:
-        self.ctx.enable(moderngl.BLEND)
-        self.ctx.blend_equation = equation
-        self.ctx.blend_func = funcs[0], funcs[1]
-
         texture: Texture = self.surface_to_texture(surface)
-
-        texture.use(0)
-        self.programs["main"]["tex"] = 0
-        self.programs["main"]["position"] = position.x, position.y
-        self.programs["main"]["alpha"] = alpha
-
-        self.blit_vao.render(moderngl.TRIANGLE_STRIP)
-
+        self.blit_texture(position, texture, alpha, equation, funcs, True)
         texture.release()
-        self.ctx.disable(moderngl.BLEND)
-        self.ctx.blend_equation = moderngl.FUNC_ADD
-        self.ctx.blend_func = moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA
 
     def blit_texture(self, position: UV_Position, texture: Texture, alpha: float=1, equation=moderngl.FUNC_ADD,
-                     funcs=(moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA)) -> None:
+                     funcs=(moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA), use_blit_vao: bool=False) -> None:
         self.ctx.enable(moderngl.BLEND)
         self.ctx.blend_equation = equation
         self.ctx.blend_func = funcs[0], funcs[1]
@@ -281,7 +267,10 @@ class Graphics:
         self.programs["main"]["position"] = position.x, position.y
         self.programs["main"]["alpha"] = alpha
 
-        self.effect_vao.render(moderngl.TRIANGLE_STRIP)
+        if use_blit_vao:
+            self.blit_vao.render(moderngl.TRIANGLE_STRIP)
+        else:
+            self.effect_vao.render(moderngl.TRIANGLE_STRIP)
 
         self.ctx.disable(moderngl.BLEND)
         self.ctx.blend_equation = moderngl.FUNC_ADD

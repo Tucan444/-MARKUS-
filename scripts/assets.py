@@ -2,7 +2,7 @@ import pygame
 import os
 
 from scripts.AssetClasses.UI.ui_sheet import UI_Sheet
-from scripts.AssetClasses.animation import Animation
+from scripts.AssetClasses.Animation.animation import Animation
 from scripts.AssetClasses.Tilemap.tilemap import Tilemap
 from scripts.GameTypes import Success
 from scripts.Utilities.component import Component

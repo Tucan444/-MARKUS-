@@ -1,17 +1,9 @@
-import os, sys, gc
+import os, sys
 import pygame
-from pygame import Vector2
 
-from scenes.Editors.Tilemap.editor_grid_ui import GridUI
-from scripts.AssetClasses.Tilemap.grid import Grid
-from scripts.AssetClasses.UI.Groups.ui_group import UI_Group
-from scripts.AssetClasses.UI.image import Image
-from scripts.AssetClasses.UI.text import Text
-from scripts.AssetClasses.UI.toggle import Toggle
 from scripts.DataStructures.rays import Ray
 from scripts.GameTypes import CommandType
 from scripts.Utilities.Flow.tick_machine import TickMachine
-from scripts.Utilities.Flow.timeline import Timeline
 from scripts.Utilities.Flow.timer import Timer
 from scripts.Utilities.Graphics.graphics_command import GraphicsCommand
 
@@ -24,7 +16,7 @@ class Debug:
         self.boilmap = None
 
         self.g_command: GraphicsCommand = GraphicsCommand(
-            self.game, -10, CommandType.DISPLAY_BLIT, display="main", alpha=1)
+            self.game, -100, CommandType.DISPLAY_BLIT, display="main", alpha=1)
 
         # self.timeline3 = Timeline(self.game, "timeline3", 0.3)
         # self.timer = Timer(self.game, "5sec", 5.5, 2.3)

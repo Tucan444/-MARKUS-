@@ -3,9 +3,9 @@ from pygame.math import Vector2
 
 from scripts.AssetClasses.Tilemap.gridcaster import Gridcaster
 from scripts.AssetClasses.Tilemap.Tiles.tile import Tile
-from scripts.AssetClasses.animation import Animation
+from scripts.AssetClasses.Animation.animation import Animation
 from scripts.GameTypes import TilePosition, Resolution, GridPosition, WorldPosition, Percentage, \
-    DisplayPosition, FocusedVector, TileHitInfo, WorldRay, GridRay, IntRange
+    DisplayPosition, FocusedVector, TileHitInfo, WorldRay, GridRay, IntRange, GridRect
 
 
 class Grid:
@@ -184,11 +184,8 @@ class Grid:
         if image in self.game.assets.image_names:
             return self.game.assets.image_names[image]
 
-        if self.tile_size not in self.tilemap.resized_image_names:
-            return "IMAGE MISSING, NO SUCH RESOLUTION IN RESIZED IMAGES"
-
-        if image not in self.tilemap.resized_image_names[self.tile_size]:
-            return "IMAGE MISSING, IMAGE NOT IN RESIZED IMAGES"
+        assert self.tile_size in self.tilemap.resized_image_names
+        assert image in self.tilemap.resized_image_names[self.tile_size]
 
         return self.tilemap.resized_image_names[self.tile_size][image]
 
@@ -224,6 +221,9 @@ class Grid:
         return self.tilemap.tilemap_resized_animations[self.tile_size][animation_name]
 
     def get_name_of_animation(self, animation: Animation) -> str:
+        if animation in self.tilemap.tilemap_cloned_names:
+            return self.tilemap.tilemap_cloned_names[animation]
+
         assert self.tile_size in self.tilemap.resized_animation_names
         assert animation in self.tilemap.resized_animation_names[self.tile_size]
 
@@ -278,7 +278,7 @@ class Grid:
         camera_pos: GridPosition = self.position_world_to_grid(self.tilemap.game.camera.position)
         camera_tile_pos: TilePosition = self.position_grid_to_tile(camera_pos)
         camera_bound_tile_pos: TilePosition = self.position_grid_to_tile(camera_pos + Vector2(*self.game.window.display_size))
-        camera_rect: pygame.FRect = pygame.FRect(*camera_pos, *self.game.window.display_size)
+        camera_rect: GridRect = pygame.FRect(*camera_pos, *self.game.window.display_size)
 
         tiles: list[Tile] = []
 
@@ -311,7 +311,7 @@ class Grid:
 
         grid_pos: GridPosition = self.position_world_to_grid(position)
         fixed_pos: GridPosition = grid_pos - (0.5 * Vector2(size, size))
-        pos_rect: pygame.FRect = pygame.FRect(*fixed_pos, size, size)
+        pos_rect: GridRect = pygame.FRect(*fixed_pos, size, size)
         tile_pos: TilePosition = self.position_grid_to_tile(grid_pos)
 
         tiles: list[Tile] = []

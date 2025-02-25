@@ -31,6 +31,9 @@ Example:
                     "image": "random/tile",
                     "position": "10;0",
                     "alpha": 1
+                },
+                {
+                    "position":"11;17","animation":"tiles/color/rainbow"
                 }
             ],
             "offgrid background": [],

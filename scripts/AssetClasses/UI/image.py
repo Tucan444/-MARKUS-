@@ -15,6 +15,17 @@ class Image(UI_Element):
         self.image_hover: Surface = image_hover
 
     @property
+    def as_string(self) -> str:
+        return (f"name: {self.name}, sheet name: {self.ui_sheet.name}, position: {self.position}, "
+                f"active: {self.active}, layer: {self.layer}, hitbox type: {self.hitbox_type}")
+
+    def __repr__(self):
+        return self.as_string
+
+    def __str__(self):
+        return self.as_string
+
+    @property
     def as_json(self) -> dict:
         json_form: dict = self.element_json
 

@@ -4,7 +4,7 @@ import pygame
 from scripts.AssetClasses.Tilemap.grid import Grid
 from scripts.AssetClasses.Tilemap.gridcaster import Gridcaster
 from scripts.AssetClasses.Tilemap.Tiles.tile import Tile
-from scripts.AssetClasses.animation import Animation
+from scripts.AssetClasses.Animation.animation import Animation
 from scripts.GameTypes import WorldPosition, Percentage, FocusedPosition, DisplayPosition, TileHitInfo, WorldRay, \
     TilePosition
 
@@ -28,6 +28,9 @@ class Tilemap:
         self.tilemap_resized_animations: dict[int, dict[str, Animation]] = {}
         self.resized_animation_names: dict[int, dict[Animation, str]] = {}
 
+        self.tilemap_cloned_animations: dict[str, Animation] = {}
+        self.tilemap_cloned_names: dict[Animation, str] = {}
+
         self.tile_groups: dict[str, set[Tile]] = {}
 
     @property
@@ -43,6 +46,22 @@ class Tilemap:
         return sum([
             grid.tile_count for grid in self.grids_ordered
         ])
+
+    def clone_animation_for_tilemap(self, animation_name: str) -> bool:
+        if animation_name not in self.game.assets.animations:
+            return False
+
+        if animation_name in self.tilemap_cloned_animations:
+            return True
+
+        anim: Animation = self.game.assets.animations[animation_name].hard_clone
+        self.tilemap_cloned_animations[animation_name] = anim
+        self.tilemap_cloned_names[anim] = animation_name
+
+        return True
+
+    def get_cloned_animation(self, animation_name: str) -> Animation:
+        return self.tilemap_cloned_animations[animation_name]
 
     def has_grid(self, grid: Grid) -> bool:
         return grid.name in self.grids and self.grids[grid.name] == grid
@@ -275,6 +294,12 @@ class Tilemap:
                 else:
                     animation.advance_frame()
 
+        for animation in self.tilemap_cloned_animations.values():
+            if advance_by_time:
+                animation.update_time()
+            else:
+                animation.advance_frame()
+
     def update_animation(self, animation_name: str, advance_by_time: bool=True) -> None:
         for tile_size in self.tilemap_resized_animations.keys():
             if animation_name in self.tilemap_resized_animations[tile_size]:
@@ -282,3 +307,9 @@ class Tilemap:
                     self.tilemap_resized_animations[tile_size][animation_name].update_time()
                 else:
                     self.tilemap_resized_animations[tile_size][animation_name].advance_frame()
+
+        if animation_name in self.tilemap_cloned_animations:
+            if advance_by_time:
+                self.tilemap_cloned_animations[animation_name].update_time()
+            else:
+                self.tilemap_cloned_animations[animation_name].advance_frame()

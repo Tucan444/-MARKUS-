@@ -1,0 +1,8 @@
+mouse scroll - change selected image
+left click/hold - place tile
+right click/hold - delete tile
+lshift - toggle ongrid/offgrid
+tab - toggle offgrid bg/fg
+ctrl - toggle snapon for offgrid tiles
+
+tile size, ongrid padding - cant be adjusted in editor, change in .json

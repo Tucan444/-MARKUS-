@@ -1,8 +1,8 @@
 import pygame
 
-from scripts.AssetClasses.Tilemap.tile_component import TileComponent
+from scripts.AssetClasses.Tilemap.Tiles.tile_component import TileComponent
 from scripts.GameTypes import TilePosition, WorldPosition, DisplayPosition, GridPosition, OffgridTilePosition, \
-    Percentage, Resolution
+    Percentage, Resolution, WorldRect, GridRect
 
 
 class Tile:
@@ -10,12 +10,12 @@ class Tile:
                  offgrid: bool, alpha: Percentage, groups: set[str] | None=None):
         self.game = grid.game
         self.grid: 'Grid' = grid
-        self.image: pygame.Surface = image
+        self._image: pygame.Surface = image
         self.position: TilePosition | OffgridTilePosition = position
         self.offgrid: bool = offgrid
         self.alpha: Percentage = alpha
         self.groups: set[str] = set() if groups is None else groups
-        self.components: dict[str, TileComponent] = {}
+        self.components: list[TileComponent] = []
 
         self._used_alpha: int = round(255 * self.alpha)
         self._alpha_image: pygame.Surface | None = None
@@ -24,6 +24,22 @@ class Tile:
         self.blit_position_function: callable = self.get_blit_position
         self.blit_image_function: callable = self.get_blit_image
         self.alpha_image_function: callable = self.get_alpha_image
+        self.offgrid_size_function: callable = self.get_offgrid_size
+
+        # ongrid size is just tile_size
+        # unite rects and images for ongrid?
+        # easier collision detection for real tile size
+
+        # we would need functions for all positions as they are required for correct rect, or expensive
+        # we can change offgrid size now, not a problem for offgrid, while default position is used with combination
+
+        # suggestion maybe well see
+        # on_need_basis when well need grass well see, for now leave, maybe just add blit rects
+        # in particular blit_rect() and world_blit_rect()
+
+    @property
+    def image(self) -> pygame.Surface:
+        return self._image
 
     @property
     def used_alpha(self) -> int:
@@ -54,11 +70,10 @@ class Tile:
 
     @property
     def size(self) -> Resolution:
-        return self.blit_image.get_size()
+        if self.offgrid:
+            return self.offgrid_size_function(self)
 
-    @property
-    def blit_image(self) -> pygame.Surface:
-        return self.image
+        return self.grid.tile_size, self.grid.tile_size
 
     @property
     def clone(self) -> 'Tile':
@@ -78,7 +93,7 @@ class Tile:
             as_json["groups"] = list(self.groups)
 
         if len(self.components) > 0:
-            as_json["components"] = [component.as_json for component in self.components.values()]
+            as_json["components"] = [component.as_json for component in self.components]
 
         return as_json
 
@@ -116,17 +131,20 @@ class Tile:
         return self.display_position
 
     def get_blit_image(self, _: 'Tile') -> pygame.Surface:
-        return self.blit_image
+        return self.image
 
     def get_alpha_image(self, _: 'Tile') -> pygame.Surface:
         return self.alpha_image
 
+    def get_offgrid_size(self, _: 'Tile') -> tuple[int, int]:
+        return self.image.get_size()
+
     @property
-    def grid_rect(self) -> pygame.FRect:
+    def grid_rect(self) -> GridRect:
         return pygame.FRect(*self.grid_position, *self.size)
 
     @property
-    def rect(self) -> pygame.FRect:
+    def rect(self) -> WorldRect:
         return pygame.FRect(*self.world_position, *self.size)
 
     @property

@@ -1,0 +1,10 @@
+{
+  "name": "area effect editor",
+  "active": false,
+  "order": 0,
+  "active scripts": [
+    "effect_editor.py"
+  ],
+  "execution order": {
+  }
+}

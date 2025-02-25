@@ -27,6 +27,17 @@ class SceneManager:
             if scene.active:
                 scene.end()
 
+    @staticmethod
+    def get_scene_changer(disable: list[Scene], enable: list[Scene]) -> callable:
+        def scene_changer(*_, **__):
+            for scene in disable:
+                scene.active = False
+
+            for scene in enable:
+                scene.active = True
+
+        return scene_changer
+
     @property
     def as_string(self) -> str:
         return f"number of scenes: {len(self.scenes_ordered)}"
